@@ -44,9 +44,16 @@ function setDisplayNone(elementId) {
     function checkTheGessedNumber(){
         element("checkNumberBTN").style.visibility="hidden";
             const guessedNumber =element("guessedNum").value ;
+        if (guessedNumber % 1 != 0) {
+            element("checked-number-worning").innerText =" error cannot enter anumber of 4 digets";  
+            element("checkNumberBTN").style.visibility="";
+        } else{   
         if (guessedNumber.length === 4) {
             app.guessesCount++;
+
+        //
             console.log(guessedNumber+" guess number " +app.guessesCount );
+        //    
             if (guessedNumber == app.number) {
                 sendTheNumberOfGuessesToDataBase();// TODO
 
@@ -57,6 +64,7 @@ function setDisplayNone(elementId) {
             }
             
         } else{
+            element("checked-number-worning").innerText =" worng number !! number most be 4 digets Enter anther one!!";
 
         }
         element("checkNumberBTN").style.visibility="";
@@ -64,6 +72,7 @@ function setDisplayNone(elementId) {
             element("checkNumberBTN").style.visibility="hidden";
             element("checked-number-worning").innerText =" click the restart button your guesses are 20 guesses";
         }
+    }
     }
 
 
