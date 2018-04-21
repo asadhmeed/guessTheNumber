@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="Css/guessTheNumber.css">
+    <script src="javascript/guessTheNumber.js"></script>
+    <title>guess the number</title>
+</head>
+<body onload="hideTheGameOnStart();" >
+
+        <div id ="start-menu" >
+            <div id="start-menu-content">
+                <div id="name-worning"></div>
+                <input type="text"  placeholder="Enter your user name" id="userName"><br>
+                <input type="button" value="start the game" onclick="startTheGame();" id="startBTN">
+            </div>
+            </div>
+    <div id="game-grid">
+        
+        <div  >
+            <div><h1 id="name-display-text" ></h1></div>
+            <input type="text"  placeholder="guessed number" id="guessedNum">
+            <input type="button" value="Check" onclick="checkTheGessedNumber();" id="checkNumberBTN"><br>
+            <div><h3 id="checked-number-worning"></h3></div>
+            <table align ="center" id="guesses-table">
+                <tr>
+                    <th>#</th>
+                    <th>Guess</th>
+                    <th>Result</th>
+                </tr>
+                
+
+            </table>
+        </div>
+        <div>
+            <h1>High Scores</h1>
+        </div>
+        
+        <div>
+            <table align ="center" id="high-score-table">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Number of Guesses</th>
+                </tr>
+    
+            </table>
+            <input type="button" value="Clear"><br>
+            <input type="button" value="Restart The Game" onclick="">
+        </div>
+    </div>
+    
+</body>
+</html>
