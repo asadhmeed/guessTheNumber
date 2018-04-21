@@ -4,7 +4,17 @@ timesToGuess : 20,
 guessesCount:0,
 number:"",
 baseURL:"",
+guessesNumbers :[],
+firstGame:false,
+
 }
+
+// tasks
+// clear button
+// restart button
+// display the guesses in the table withe auto update and check the digets and display the corect digets and the wrong ones
+// display the high score table withe auto update
+
 
 function hideTheGameOnStart(){
     setDisplayNone("game-grid")
@@ -14,22 +24,27 @@ function setDisplayNone(elementId) {
     element(elementId).style.display = "none";
 }
     
-    function setDisplayBlock(elementId){
-        element(elementId).style.display = "block";
+    function setDisplayVisible(elementId){
+        element(elementId).style.display = "";
     }
 
     function startTheGame(){
+        if (!app.firstGame) {
+            app.firstGame = true;
+            setDisplayNone("high-score-table");
+        }
        element("guessedNum").value ="";
         element("startBTN").style.visibility="hidden";
         if(element("userName").value !== ""){
             setDisplayNone("start-menu");
-            setDisplayBlock("game-grid");
+            setDisplayVisible("game-grid");
             app.userName = element("userName").value;
             element("name-display-text").innerHTML = app.userName +" turn";
             //TODO
             getTheNumberToGuess();
 
             element("userName").value="";
+            // element("high-score-table").style.display="none";
         }
         else{
          
@@ -39,20 +54,29 @@ function setDisplayNone(elementId) {
         }
         element("startBTN").style.visibility="";
     }
+    function restartTheGame() {
+        app.numberOfGuesses =0;
+        app.guessesCount =0;
+        app.guessesNumbers =[];
+        element("startBTN").style.visibility="";
+        element("checkNumberBTN").style.visibility="";
+
+    }
 
 
     function checkTheGessedNumber(){
         element("checkNumberBTN").style.visibility="hidden";
             const guessedNumber =element("guessedNum").value ;
-        if (guessedNumber % 1 != 0) {
+        if (guessedNumber % 1 != 0) {//check if the user entered a number and not characters
             element("checked-number-worning").innerText =" error cannot enter anumber of 4 digets";  
             element("checkNumberBTN").style.visibility="";
         } else{   
+
         if (guessedNumber.length === 4) {
             app.guessesCount++;
-
+            app.guessesNumbers[app.guessesCount] =guessedNumber;
         //
-            console.log(guessedNumber+" guess number " +app.guessesCount );
+            console.log(guessedNumber+" guess number " +app.guessesCount  + " "+ app.guessesNumbers);
         //    
             if (guessedNumber == app.number) {
                 sendTheNumberOfGuessesToDataBase();// TODO
@@ -71,6 +95,7 @@ function setDisplayNone(elementId) {
         if (app.guessesCount== app.timesToGuess) {
             element("checkNumberBTN").style.visibility="hidden";
             element("checked-number-worning").innerText =" click the restart button your guesses are 20 guesses";
+            sendTheNumberOfGuessesToDataBase();
         }
     }
     }
@@ -78,20 +103,22 @@ function setDisplayNone(elementId) {
 
 
     function getTheNumberToGuess(){ //TODO
-        let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log("new number " + this.responseText);
+    //     let xhttp = new XMLHttpRequest();
+	// xhttp.onreadystatechange = function() {
+	// 	if (this.readyState == 4 && this.status == 200) {
+	// 		console.log("new number " + this.responseText);
 			
-		}
-	};
-	xhttp.open("get", app.baseURL + "/getNumber", true);
-	xhttp.setRequestHeader("Content-Type", "application/json");
-	xhttp.send();
+	// 	}
+	// };
+	// xhttp.open("get", app.baseURL + "/getNumber", true);
+	// xhttp.setRequestHeader("Content-Type", "application/json");
+	// xhttp.send();
         
     }
 
-    function sedTheNumberOfGuessesToDataBase(){
+    function sendTheNumberOfGuessesToDataBase(){
+
+        setDisplayVisible("high-score-table");
 
        const plyer={
            name:app.name,
@@ -99,16 +126,16 @@ function setDisplayNone(elementId) {
 
        }
 
-       let xhttp = new XMLHttpRequest();
-	       xhttp.onreadystatechange = function() {
-		    if (this.readyState == 4 && this.status == 200) {
-			   console.log("new id is " + this.responseText);
+    //    let xhttp = new XMLHttpRequest();
+	//        xhttp.onreadystatechange = function() {
+	// 	    if (this.readyState == 4 && this.status == 200) {
+	// 		   console.log("new id is " + this.responseText);
 			
-		}
-	};
-	xhttp.open("POST", app.baseURL + "/insertPlayer", true);
-	xhttp.setRequestHeader("Content-Type", "application/json");
-	xhttp.send(JSON.stringify(plyer));
+	// 	}
+	// };
+	// xhttp.open("POST", app.baseURL + "/insertPlayer", true);
+	// xhttp.setRequestHeader("Content-Type", "application/json");
+	// xhttp.send(JSON.stringify(plyer));
     }
   
 
