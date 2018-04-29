@@ -3,10 +3,11 @@ const app = {
     timesToGuess: 20,
     guessesCount: 0,
     number: "",
-    baseURL: "",
+    baseURL: "api/appServices",
     guessesNumbers: [],
     firstGame: false,
     highScoreTable: [],
+    
 }
 
 // tasks
@@ -95,7 +96,7 @@ function checkTheGuessedNumber() {
 
                 let tableRow = "";
                 if (guessedNumber == app.number) {
-                    sendTheNumberOfGuessesToDataBase();
+                    
                     setVisibilityOff("checkNumberBTN");
                     element("checked-number-worning").innerText = "Enter your name and submet the Results to send it to the database";
                     app.guessesCount = 0;
@@ -147,18 +148,18 @@ function checkIfTheGuessedNumberIsContainsADifferentDigits(number) {
     return isTheNumberValide === "1111";
 }
 
-function getTheNumberToGuess() { //TODO
-    app.number = "0147";
-    //     let xhttp = new XMLHttpRequest();
-    // xhttp.onreadystatechange = function() {
-    // 	if (this.readyState == 4 && this.status == 200) {
-    // 		console.log("new number " + this.responseText);
-
-    // 	}
-    // };
-    // xhttp.open("get", app.baseURL + "/getNumber", true);
-    // xhttp.setRequestHeader("Content-Type", "application/json");
-    // xhttp.send();
+function getTheNumberToGuess() { 
+    
+        let xhttp = new XMLHttpRequest();
+     xhttp.onreadystatechange = function() {
+     	if (this.readyState == 4 && this.status == 200) {
+     		console.log("new number " + this.responseText);
+     		app.number =this.responseText;
+     	}
+     };
+     xhttp.open("get", app.baseURL + "/getNumber", true);
+     xhttp.setRequestHeader("Content-Type", "application/json");
+     xhttp.send();
 
 }
 
@@ -167,6 +168,7 @@ function submetTheGameResults() {
     setDisplayVisible("high-score-table");
     setDisplayVisible("nameSubmet");
     if (element("userName").value !== "") {
+    	app.userName =element("userName").value;
         sendTheNumberOfGuessesToDataBase();
     } else {
         setDisplayNone("submetNamebtn");
@@ -174,7 +176,7 @@ function submetTheGameResults() {
         worningText.innerText = "Error Enter your Name ...!!!";
         worningText.style.color = "red";
     }
-    sendTheNumberOfGuessesToDataBase();
+    
     clearTheGame();
 }
 
@@ -197,28 +199,45 @@ function sendTheNumberOfGuessesToDataBase() {
 
 
 
-    const plyer = {
-        name: app.name,
-        numberOfGuesses: app.numberOfGuesses,
+    const player = {
+    	id:1,	
+        name: app.userName,
+        numberOfGuesses: app.guessesCount,
 
     }
 
-    //    let xhttp = new XMLHttpRequest();
-    //        xhttp.onreadystatechange = function() {
-    // 	    if (this.readyState == 4 && this.status == 200) {
-    // console.log(this.responseText);
-    // app.highScoreTable = JSON.parse(this.responseText);
-    creatTheHighScoreTable(app.highScoreTable);
-    // 	}
-    // };
-    // xhttp.open("POST", app.baseURL + "/insertPlayer", true);
-    // xhttp.setRequestHeader("Content-Type", "application/json");
-    // xhttp.send(JSON.stringify(plyer));
+        let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+     	    if (this.readyState == 4 && this.status == 200) {
+  console.log(this.responseText);
+  
+     	}
+     };
+     xhttp.open("POST", app.baseURL + "/insertPlayer", true);
+     xhttp.setRequestHeader("Content-Type", "application/json");
+     xhttp.send(JSON.stringify(player));
+     getHighScoreTableFromDataBase();
+}
+
+function getHighScoreTableFromDataBase() {
+	let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    	if (this.readyState == 4 && this.status == 200) {
+    		console.log( this.responseText);
+    		 app.highScoreTable = JSON.parse(this.responseText);
+    	    creatTheHighScoreTable(app.highScoreTable);
+    		
+    	}
+    };
+    xhttp.open("get", app.baseURL + "/getHighScores", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send();
 }
 function creatTheHighScoreTable(highScoreTable) {
+	element("high-score-table").innerHTML="<tr><th>#</th><th>Name</th><th>Number of Guesses</th></tr>";
     for (let i = 0; i < highScoreTable.length; i++) {
         // "<tr><td>" + app.guessesCount + "</td><td>" + guessedNumber + "</td><td>" + result + "</td></tr>"
-        const tableRow = "<tr><td>" + i + "</td><td>" + highScoreTable[i].name + "</td><td>" + highScoreTable[i].numberOfGuesses + "</td></tr>";
+        const tableRow = "<tr><td>" + (i+1) + "</td><td>" + highScoreTable[i].name + "</td><td>" + highScoreTable[i].numberOfGuesses + "</td></tr>";
         element("high-score-table").innerHTML += tableRow;
     }
 }
