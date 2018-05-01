@@ -2,6 +2,9 @@ package com.asad.rest.restServices;
 
 
 
+import java.lang.annotation.Repeatable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +44,25 @@ public class GuessTheNumberRestServices {
 		players.add(new Player(1,"asad",12));
 		return players;
 	}
+	@Path("/getAdminPassword")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAdminPassword() {
+		return "admin";
+	}
+	@Path("/deleteHighScoreTable")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean deleteHighScoreTable(String pass) {
+		if(pass.equals("admin")) {
+			//delete Scores
+			return true;
+			
+		}
+		return false;
+	}
+	
+	
+	
 	
 }

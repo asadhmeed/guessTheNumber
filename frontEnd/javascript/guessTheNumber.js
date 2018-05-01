@@ -245,21 +245,46 @@ function creatTheHighScoreTable(highScoreTable) {
 
 function clearHighScoreTable() {
 setDisplayVisible("admenPasswordId");
-getAdmenPassword();
+
 
 
 }
-function getAdmenPassword(){
-    //     let xhttp = new XMLHttpRequest();
-    // xhttp.onreadystatechange = function() {
-    // 	if (this.readyState == 4 && this.status == 200) {
-    // 		console.log("admen password is " + this.responseText);
-            // return this.responseText;
-    // 	}
-    // };
-    // xhttp.open("get", app.baseURL + "/getAdmenPasword", true);
-    // xhttp.setRequestHeader("Content-Type", "application/json");
-    // xhttp.send();
+function getAdminPassword(){
+         let xhttp = new XMLHttpRequest();
+     xhttp.onreadystatechange = function() {
+     	if (this.readyState == 4 && this.status == 200) {
+     		console.log("admen password is " + this.responseText);
+             return this.responseText;
+     	}
+     };
+     xhttp.open("get", app.baseURL + "/getAdminPassword", true);
+     xhttp.setRequestHeader("Content-Type", "application/json");
+     xhttp.send();
+}
+function validateAdminPassword() {
+	
+	const pass= getAdminPassword();
+	if(pass == element("admin-pass").value){
+		deleteHighScoreData( pass);
+		setDisplayNone("admenPasswordId");
+	}else{
+		element("admin-pass-error").innerHTML ="Error Admin password is worng";
+		setDisplayNone("admenPasswordId");
+	}
+	
+	function deleteHighScoreData(pass) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        	if (this.readyState == 4 && this.status == 200) {
+        		console.log("deleted  " + this.responseText);
+                
+        	}
+        };
+        xhttp.open("post", app.baseURL + "/deleteHighScoreTable", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(pass));
+        setDisplayNone("admenPasswordId"); 
+	}
 }
 
 function setVisibilityOff(elementId) {
