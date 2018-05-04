@@ -12,6 +12,7 @@
 
 <body onload="hideTheGameOnStart();">
 
+
     <div id="start-menu">
         <div id="start-menu-content">
             <div id="name-worning"></div>
@@ -57,15 +58,20 @@
 
             </table>
             <input type="button" value="Clear High Score Table" onclick="clearHighScoreTable();">
-            <div id="admin-pass-error"></div>
-            <div id="admenPasswordId">
-            <input type="button" value="admin password" onclick="">
-            <input type="text" placeholder="Enter Admen password" id="admin-pass">
-            </div>
             
-        </div>
-    </div>
 
+        </div>
+         
+    </div>
+    <div id="adminPasswordPopUp">
+	<div id="admenPasswordId" >
+	<input type="button" value="X" id="hideThePopUpBtn"
+	 onclick="document.getElementById('admenPasswordId').style.display = 'none'"><br>
+	 <div id="admin-pass-error">----</div>
+            <input type="text" placeholder="Enter Admen password" id="admin-pass"><br><br>
+            <input type="button" value="Submet Password" onclick="validateAdminPassword();">
+            </div>
+            </div>
 </body>
 
 </html>
