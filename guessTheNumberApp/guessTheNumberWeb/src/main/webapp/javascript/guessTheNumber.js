@@ -49,7 +49,8 @@ function getGameId() {
 	xhttp.send();
 }
 
-// when the player presses the start game button the game loaded
+// when the player presses the start game button this function shows the game box 
+// and setup the game component to default values
 function startTheGame() {
 
 	setDisplayNone("high-score-table");
