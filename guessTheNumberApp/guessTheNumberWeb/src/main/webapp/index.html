@@ -15,13 +15,15 @@
 
     <div id="start-menu">
         <div id="start-menu-content">
+        
+       		<h1>Guess The Number</h1>
             <div id="name-worning"></div>
             <!-- <input type="text"  placeholder="Enter your user name" id="userName"><br> -->
             <input type="button" value="start the game" onclick="startTheGame();" id="startBTN">
         </div>
     </div>
     <div id="game-grid">
-
+		<h1>Guess The Number</h1>
         <div>
             <div id="nameSubmet">
                 <input type="text" placeholder="Enter your user name" id="userName">
@@ -57,7 +59,8 @@
                 </tr>
 
             </table>
-            <input type="button" value="Clear High Score Table" onclick="clearHighScoreTable();">
+            <input type="button" value="Clear High Score Table" onclick="setAdminPopUpDisplayVisible();"><br>
+            <input type="button" value="Restart the game" onclick="restartTheGame();">
             
 
         </div>
@@ -68,8 +71,9 @@
 	<input type="button" value="X" id="hideThePopUpBtn"
 	 onclick="document.getElementById('admenPasswordId').style.display = 'none'"><br>
 	 <div id="admin-pass-error">----</div>
+	 <input type="text" placeholder="Enter Admen User Name" id="admin-user"><br>
             <input type="text" placeholder="Enter Admen password" id="admin-pass"><br><br>
-            <input type="button" value="Submet Password" onclick="validateAdminPassword();">
+            <input type="button" value="Submet Password" onclick="checkAdminUserNameAndPasswordAndDeletHighScoreData();">
             </div>
             </div>
 </body>

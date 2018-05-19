@@ -1,9 +1,22 @@
-package com.asad.rest;
+package com.asad.guessTheNumberService.entitys;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "highScoreTable")
 public class Player {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name="playerName")
 	private String name;
+	
 	private int numberOfGuesses;
 	
 	public Player() {
