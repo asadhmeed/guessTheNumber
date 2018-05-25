@@ -1,8 +1,6 @@
 const app = {
 	userName : "",
 	timesToGuess : 20,
-	guessesCount : 0,
-
 	baseURL : "api/appServices",
 	guessesNumbers : [],
 	highScoreTable : [],
@@ -11,25 +9,40 @@ const app = {
 	gameId : 0,
 
 }
-// on the start only the start game button should be display
+// on the start only the start view  should be display
 function hideTheGameOnStart() {
+	//display none hides the view
 	setDisplayNone("admenPasswordId");
 	setDisplayNone("nameSubmet");
 	setDisplayNone("game-grid");
 
 }
-// restart the game
+
+function hideTheGameButtons() {
+	setVisibilityOff("checkNumberBTN");
+	setVisibilityOff("submetNamebtn");
+	setVisibilityOff("clearBTN");
+	setVisibilityOff("restartBTN");
+}
+function showTheGameButtons() {
+	setVisibilityOn("checkNumberBTN");
+	setVisibilityOn("submetNamebtn");
+	setVisibilityOn("clearBTN");
+	setVisibilityOn("restartBTN");
+}
+// restart the game returns the game to default view with default arguments
 function restartTheGame() {
 	app.userName = "";
 	app.guessesNumbers = [];
 	setVisibilityOn("checkNumberBTN");
 	setDisplayVisible("submetNamebtn");
 	setDisplayNone("nameSubmet");
-	element("checked-number-worning").innerText = "guess  anther number";
+	
+
+
 	element("guesses-table").innerHTML = " <tr> <th>#</th> <th>Guess</th> <th>Result</th></tr>";
 	element("guessedNum").value = "";
 	setDisplayNone("high-score-table");
-	app.firstGame = false;
 	hideTheGameOnStart();
 	setDisplayVisible("start-menu");
 	setVisibilityOn("submetNamebtn");
@@ -52,9 +65,10 @@ function getGameId() {
 // when the player presses the start game button this function shows the game box 
 // and setup the game component to default values
 function startTheGame() {
-
+    
 	setDisplayNone("high-score-table");
 	getGameId();
+	setTheElementInnerTextWithNewColor("checked-number-worning","guess  a number","black");
 	element("guessedNum").value = "";
 	setDisplayNone("start-menu");
 	setDisplayVisible("game-grid");
@@ -76,12 +90,14 @@ function checkTheGuessedNumber() {
 	if (CheckTheNumber.guessedNumber % 1 != 0) {// check if the user entered a
 		// number and
 		// not characters
-		element("checked-number-worning").innerText = " Error what you entered is not anumber. enter a number of 4 different digets";
+		setTheElementInnerTextWithNewColor("checked-number-worning"," Error what you entered is not anumber. enter a number of 4 different digets","#df2920");
+
+
 		setVisibilityOn("checkNumberBTN");
 	} else {
 		if (CheckTheNumber.guessedNumber.length === 4) {// checks if the length
 														// of the number is
-														// equal to fore
+														// equal to 4
 			let xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
@@ -93,7 +109,8 @@ function checkTheGuessedNumber() {
 						// user entered
 						// a number and
 						// not characters
-						element("checked-number-worning").innerText = " Error what you entered is not anumber. enter a number of 4 different digets";
+						setTheElementInnerTextWithNewColor("checked-number-worning"," Error what you entered is not anumber. enter a number of 4 different digets","#df2920");
+
 						setVisibilityOn("checkNumberBTN");
 					} else {
 
@@ -120,10 +137,11 @@ function checkTheGuessedNumber() {
 																							// a
 																							// duplicate
 																							// digits
-								element("checked-number-worning").innerText = "Error !! Enter a Number With four Different Digits";
+								setTheElementInnerTextWithNewColor("checked-number-worning","Error !! Enter a Number With four Different Digits","#df2920");
+
 								setVisibilityOn("checkNumberBTN");
 							} else {
-								app.guessesCount = response.numberOfGuesses;
+								
 								app.guessesNumbers[response.numberOfGuesses] = CheckTheNumber.guessedNumber;
 								// log
 								console.log(CheckTheNumber.guessedNumber
@@ -160,7 +178,8 @@ function checkTheGuessedNumber() {
 								if (theDigitsThatGuessedRight == "1111") {
 
 									setVisibilityOff("checkNumberBTN");
-									element("checked-number-worning").innerText = "Enter your name and submet the Results to send it to the database";
+									setTheElementInnerTextWithNewColor("checked-number-worning","Enter your name and submet the Results to send it to the database","black");
+
 
 									setDisplayVisible("nameSubmet");
 									tableRow = "<tr style='background-color:#a6ff00;'><td>"
@@ -172,7 +191,8 @@ function checkTheGuessedNumber() {
 											+ "</td></tr>";
 
 								} else {
-									element("checked-number-worning").innerText = " worng number Enter anther one!!";
+									setTheElementInnerTextWithNewColor("checked-number-worning"," worng number Enter anther one!!","#df2920");
+
 									setVisibilityOn("checkNumberBTN");
 									tableRow = "<tr><td>"
 											+ response.numberOfGuesses
@@ -186,7 +206,8 @@ function checkTheGuessedNumber() {
 							}
 
 						} else {
-							element("checked-number-worning").innerText = " worng number !! number most be 4 digets Enter anther one!!";
+							setTheElementInnerTextWithNewColor("checked-number-worning"," worng number !! number most be 4 digets Enter anther one!!","#df2920");
+
 							setVisibilityOn("checkNumberBTN");
 						}
 
@@ -202,7 +223,9 @@ function checkTheGuessedNumber() {
 			xhttp.setRequestHeader("Content-Type", "application/json");
 			xhttp.send(JSON.stringify(CheckTheNumber));
 		} else {
-			element("checked-number-worning").innerText = " worng number !! number most be 4 digets Enter anther one!!";
+			setTheElementInnerTextWithNewColor("checked-number-worning"," worng number !! number most be 4 digets Enter anther one!!","#df2920");
+
+
 			setVisibilityOn("checkNumberBTN");
 		}
 	}
@@ -219,13 +242,12 @@ function submetTheGameResults() {
 		app.userName = element("userName").value;
 
 		sendTheNumberOfGuessesToDataBase();
-
+		setDisplayNone("submetNamebtn");
 	} else {
 
-		setDisplayNone("submetNamebtn");
-		let worningText = element("checked-number-worning")
-		worningText.innerText = "Error Enter your Name ...!!!";
-		worningText.style.color = "red";
+		
+		setTheElementInnerTextWithNewColor("checked-number-worning","Error Enter your Name ...!!!","#df2920");
+
 	}
 
 }
@@ -237,7 +259,7 @@ function sendTheNumberOfGuessesToDataBase() {
 	const player = {
 
 		name : app.userName,
-		numberOfGuesses : app.guessesCount,
+		gameId:app.gameId,
 
 	};
 
@@ -246,14 +268,13 @@ function sendTheNumberOfGuessesToDataBase() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log(this.responseText);
 			this.responseText;
-			// check if the name is already exists in the data base ("-1 , -2"
-			// does not exist)
-			if (this.responseText == "-2" || this.responseText == "-1") {
-				let worningText = element("checked-number-worning")
-				worningText.innerText = "the name you Enter is already used enter anther one";
-				worningText.style.color = "red";
+			// check if the name is already exists in the data base 
+			if (this.responseText == "errorEnterAntherName" ) {
+				setTheElementInnerTextWithNewColor("checked-number-worning","the name you Enter is already used enter anther one","#df2920");
+
 
 			} else {
+				
 				setVisibilityOff("submetNamebtn");
 				getHighScoreTableFromDataBase();
 				setDisplayVisible("high-score-table");
@@ -316,19 +337,16 @@ function checkAdminUserNameAndPasswordAndDeletHighScoreData() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log("deleted " + this.responseText);
 			let adminDataValidation = JSON.parse(this.responseText);
-			if (adminDataValidation == "true") {
-				deleteHighScoreData();
+			if (this.responseText == "true") {
+				
+				
+				setTheElementInnerTextWithNewColor("admin-pass-error","Data successfully deleted","green");
 
-				let worningText = element("admin-pass-error")
-				worningText.innerText = "Data successfully deleted";
-				worningText.style.color = "green";
 				setVisibilityOn("admin-pass-error");
 
-			} else if (adminDataValidation == "false") {
+			} else if (this.responseText == "false") {
+				setTheElementInnerTextWithNewColor("admin-pass-error","Error Admin password or user name is worng","#df2920");
 
-				let worningText = element("admin-pass-error")
-				worningText.innerText = "Error Admin password or user name is worng";
-				worningText.style.color = "red";
 				setVisibilityOn("admin-pass-error");
 
 			}
@@ -339,6 +357,13 @@ function checkAdminUserNameAndPasswordAndDeletHighScoreData() {
 	xhttp.setRequestHeader("Content-Type", "application/json");
 	xhttp.send(JSON.stringify(adminData));
 
+}
+//takes a elementId,text and a color .
+//change  the text color and change the element inner text with the new colored text
+function setTheElementInnerTextWithNewColor(elementId,text,color){
+	let worningText = element(elementId)
+	worningText.innerText = text;
+	worningText.style.color = color;
 }
 
 function setVisibilityOff(elementId) {

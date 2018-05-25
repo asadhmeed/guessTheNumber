@@ -19,6 +19,8 @@ import javax.ws.rs.core.MediaType;
 import com.asad.guessTheNumberService.AdminData;
 import com.asad.guessTheNumberService.CheckTheNumber;
 import com.asad.guessTheNumberService.CheckTheNumberResults;
+import com.asad.guessTheNumberService.PlayerInfoFromTheCliant;
+import com.asad.guessTheNumberService.PlayerInsertedToDataBaseInfo;
 import com.asad.guessTheNumberService.ejbs.GuessTheNumberEjbService;
 import com.asad.guessTheNumberService.entitys.Player;
 
@@ -34,10 +36,11 @@ public class GuessTheNumberRestServices {
 	@Path("/insertPlayer")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int saveTheGuesses(Player player) {
+	public String saveTheGuesses(PlayerInfoFromTheCliant player) {
 		System.out.println(player.getName());
-		int id =guessTheNmberService.insertPlayer( player);
-		return id;	
+		
+	 String isInserted =guessTheNmberService.insertPlayer( player);
+		return isInserted;	
 		}
 	@Path("/getHighScores")
 	@GET

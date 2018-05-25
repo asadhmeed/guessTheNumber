@@ -1,19 +1,21 @@
 body{
     
-    background-color: rgb(122, 192, 171);
-    
+    background-color: #B7DCF4;
+    color: gray;
     
 }
 
 #start-menu-content{
     margin: 20%;
+    
 }
 #game-grid,#start-menu{
-    border: 5px solid red;
+    
     position: absolute;
     width: 100%;
     height: auto;
    text-align: center;
+  
    
 }
 
@@ -45,18 +47,12 @@ td,th{
 	padding: 1%;
 	
 }
-#adminPasswordPopUp{
-	border:1px solid black;
-	background-color:gray;
-	height:100%;
-	width: 100%;
-	z-index: 1;
-	
+
+#enter-admin-info{
+	color: black;
 }
 #hideThePopUpBtn{
 	float: right;
 }
-#admin-pass-error{
-	visibility: hidden;
-}
+
 

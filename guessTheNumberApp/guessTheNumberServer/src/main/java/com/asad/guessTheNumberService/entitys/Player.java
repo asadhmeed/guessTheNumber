@@ -13,7 +13,7 @@ public class Player {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	@Column(name="playerName")
 	private String name;
 	
@@ -22,7 +22,7 @@ public class Player {
 	public Player() {
 		
 	}
-	public Player(int id,String name, int numberOfGuesses) {
+	public Player(Integer id,String name, int numberOfGuesses) {
 		this.id =id;
 		this.name=name;
 		this.numberOfGuesses=numberOfGuesses;

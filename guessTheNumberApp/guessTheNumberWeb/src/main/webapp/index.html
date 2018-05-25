@@ -59,8 +59,8 @@
                 </tr>
 
             </table>
-            <input type="button" value="Clear High Score Table" onclick="setAdminPopUpDisplayVisible();"><br>
-            <input type="button" value="Restart the game" onclick="restartTheGame();">
+            <input type="button" value="Clear High Score Table" onclick="setAdminPopUpDisplayVisible();hideTheGameButtons();" id="clearBTN"><br>
+            <input type="button" value="Restart the game" onclick="restartTheGame();" id="restartBTN">
             
 
         </div>
@@ -69,8 +69,9 @@
     <div id="adminPasswordPopUp">
 	<div id="admenPasswordId" >
 	<input type="button" value="X" id="hideThePopUpBtn"
-	 onclick="document.getElementById('admenPasswordId').style.display = 'none'"><br>
-	 <div id="admin-pass-error">----</div>
+	 onclick="document.getElementById('admenPasswordId').style.display = 'none';showTheGameButtons();"><br>
+	 <div id="admin-pass-error"></div>
+	 <h4 id="enter-admin-info">Enter The Admin UserName and Password</h4>
 	 <input type="text" placeholder="Enter Admen User Name" id="admin-user"><br>
             <input type="text" placeholder="Enter Admen password" id="admin-pass"><br><br>
             <input type="button" value="Submet Password" onclick="checkAdminUserNameAndPasswordAndDeletHighScoreData();">
