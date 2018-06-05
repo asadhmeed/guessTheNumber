@@ -15,7 +15,7 @@ public interface GuessTheNumberEjbService {
 
 	
 	public void deleteAll(List<Player> player);
-	public List<Player> listTheFirstTwelveOrAllPlayers(boolean isListAll);
+	public List<Player> listTheFirstTenOrAllPlayers(boolean isListAll);
 	public String ganerateTheNumber();
 	public String insertPlayer(PlayerInfoFromTheCliant player);
 	int generateGameIdAndAnumberToGuess();

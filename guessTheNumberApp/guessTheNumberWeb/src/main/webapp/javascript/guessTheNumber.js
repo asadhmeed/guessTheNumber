@@ -103,6 +103,9 @@ function checkTheGuessedNumber() {
 				if (this.readyState == 4 && this.status == 200) {
 					console.log(this.responseText);
 					const response = JSON.parse(this.responseText);
+					if (!response.gameIdIsNotValid) {
+						
+					
 					if (!response.theNumberDoesNotContainACharacter) {// check
 						// if
 						// the
@@ -217,6 +220,9 @@ function checkTheGuessedNumber() {
 
 						}
 					}
+					}else{
+						setTheElementInnerTextWithNewColor("checked-number-worning"," worning Restart the game game id is not valid!!","#df2920");
+					}
 				}
 			};
 			xhttp.open("post", app.baseURL + "/checkTheGuessedNumber", true);
@@ -242,7 +248,7 @@ function submetTheGameResults() {
 		app.userName = element("userName").value;
 
 		sendTheNumberOfGuessesToDataBase();
-		setDisplayNone("submetNamebtn");
+		
 	} else {
 
 		
@@ -255,7 +261,7 @@ function submetTheGameResults() {
 // sends the player info to be saved in the data base
 //
 function sendTheNumberOfGuessesToDataBase() {
-
+	setVisibilityOff("submetNamebtn");
 	const player = {
 
 		name : app.userName,
@@ -267,12 +273,12 @@ function sendTheNumberOfGuessesToDataBase() {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log(this.responseText);
-			this.responseText;
+			
 			// check if the name is already exists in the data base 
 			if (this.responseText == "errorEnterAntherName" ) {
 				setTheElementInnerTextWithNewColor("checked-number-worning","the name you Enter is already used enter anther one","#df2920");
-
-
+				setVisibilityOn("submetNamebtn");
+				
 			} else {
 				
 				setVisibilityOff("submetNamebtn");
@@ -290,13 +296,18 @@ function sendTheNumberOfGuessesToDataBase() {
 
 }
 
-// gets the first twelve high score data from the data base
+// gets the first ten high score data from the data base
 function getHighScoreTableFromDataBase() {
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			console.log(this.responseText);
 			app.highScoreTable = JSON.parse(this.responseText);
+			for ( var player in app.highScoreTable) {
+				if(app.name === player.name){
+					setTheElementInnerTextWithNewColor("checked-number-worning","Congratulations you are one of the first ten players in highe scores table , press the restart the game button!!","black");
+				}
+			}
 			creatTheHighScoreTable(app.highScoreTable);
 
 		}

@@ -36,6 +36,7 @@ public class GuessTheNumberRestServices {
 	@Path("/insertPlayer")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String saveTheGuesses(PlayerInfoFromTheCliant player) {
 		System.out.println(player.getName());
 		
@@ -45,13 +46,13 @@ public class GuessTheNumberRestServices {
 	@Path("/getHighScores")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Player> listHighScoreLimit12( ){
+	public List<Player> listHighScoreLimit10( ){
 		
 		List<Player> players = new ArrayList<>();
 		
 		try {
 		 players =
-				guessTheNmberService.listTheFirstTwelveOrAllPlayers(false);
+				guessTheNmberService.listTheFirstTenOrAllPlayers(false);
 		
 		
 		}catch(Exception e ){
@@ -70,7 +71,7 @@ public class GuessTheNumberRestServices {
 	public String deleteHighScoreTable(AdminData adminData) {
 		if(adminData.getPassword().equals("admin") && adminData.getUserName().equals("admin")) {
 			List<Player> players =
-					guessTheNmberService.listTheFirstTwelveOrAllPlayers(true);
+					guessTheNmberService.listTheFirstTenOrAllPlayers(true);
 			
 			guessTheNmberService.deleteAll(players);
 			return "true";

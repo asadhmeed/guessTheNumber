@@ -8,6 +8,7 @@ public class CheckTheNumberResults {
 	private String theNumberIsGuessed;
 	private boolean isTwentyChecks;
 	private int numberOfGuesses;
+	private boolean gameIdIsNotValid;
 	     
 	
 	
@@ -17,6 +18,22 @@ public class CheckTheNumberResults {
 
 
 	
+
+
+
+
+	public boolean isGameIdIsNotValid() {
+		return gameIdIsNotValid;
+	}
+
+
+
+
+
+	public void setGameIdIsNotValid(boolean gameIdIsNotValid) {
+		this.gameIdIsNotValid = gameIdIsNotValid;
+	}
+
 
 
 
